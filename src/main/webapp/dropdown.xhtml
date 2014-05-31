@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<p:panel header="Select a Location" style="margin-bottom:10px;">
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="country" value="Country: " />
+				<p:selectOneMenu id="country" value="#{hastaBean.hasta.il.sehirId}"
+					style="width:150px">
+					<p:ajax listener="#{hastaBean.ilceListele}" update=":form:city" />
+					<f:selectItem itemLabel="Select Country" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{hastaBean.iller}" var="iller"
+						itemLabel="#{iller.adi}" itemValue="#{iller.sehirId}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="city" value="City: " />
+				<p:selectOneMenu id="city" value="#{hastaBean.ilce.ilceId}"
+					style="width:150px">
+					<f:selectItem itemLabel="Select City" itemValue=""
+						noSelectionOption="true" />
+					<f:selectItems value="#{hastaBean.ilceler}" var="ilceler"
+						itemLabel="#{ilceler.adi}" itemValue="#{ilceler.ilceId}" />
+				</p:selectOneMenu>
+				
+				
+			</h:panelGrid>
+			<p:separator />
+			<p:commandButton value="Submit" update="msgs"
+				actionListener="#{hastaBean.add()}" icon="ui-icon-check" />
+			<p:commandButton value="This Surname" id="btnSurname"
+				process="@this,country" update="gor"
+				listener="#{hastaBean.denemeAjax()}" />
+			<p:outputLabel id="gor" value="#{hastaBean.il.adi}"></p:outputLabel>
+		</p:panel>
+	</h:form>
+</body>
+</html>

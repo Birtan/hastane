@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<h:form style="width:50%; margin:auto" id="form">
+		<p:panel id="panel" header="hasta kayıt" style="margin-bottom:10px;">
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="name" value="ADI:" />
+				<p:inputText id="name" required="true"
+					value="#{hastaBean.hasta.adi}" />
+
+				<h:outputLabel for="surname" value="SOYADI:" />
+				<p:inputText id="surname" required="true"
+					value="#{hastaBean.hasta.soyadi}" />
+
+				<h:outputLabel for="tc" value="TC:" />
+				<p:inputText id="tc" required="true" value="#{hastaBean.hasta.tcNo}" />
+
+				<h:outputLabel for="phone" value="TELEFON:" />
+				<p:inputText id="phone" required="true"
+					value="#{hastaBean.hasta.telefonNo}" />
+
+				<p:outputLabel for="country" value="IL: " />
+				<p:selectOneMenu id="country" value="#{hastaBean.hasta.il.sehirId}">
+					<p:ajax listener="#{hastaBean.ilceListele}" update=":form:city"/>
+					<f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+					<f:selectItems value="#{hastaBean.iller}" var="iller" itemLabel="#{iller.adi}" itemValue="#{iller.sehirId}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="city" value="ILÇE: " />
+				<p:selectOneMenu id="city" value="#{hastaBean.ilce.ilceId}">
+					<f:selectItem itemLabel="Select One" itemValue="" noSelectionOption="true"  />
+					<f:selectItems value="#{hastaBean.ilceler}" var="ilceler" itemLabel="#{ilceler.adi}" itemValue="#{ilceler.ilceId}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+		</p:panel>
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:commandButton styleClass="btn btn-default dropdown-toggle" value="Submit" update="panel"
+			action="#{hastaBean.add()}" />
+	</h:form>
+
+</body>
+</html>
